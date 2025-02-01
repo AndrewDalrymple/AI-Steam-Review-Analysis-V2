@@ -1,1 +1,23 @@
-# .gitignore - Auto-generated
+# Ignore environment variables & secrets
+.env
+*.key
+*.pem
+
+# Ignore generated data files & logs
+data/*.json
+data/*.csv
+data/*.md
+data/*.txt
+figures/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment folders
+venv/
+.env/
+.venv/
+*.log

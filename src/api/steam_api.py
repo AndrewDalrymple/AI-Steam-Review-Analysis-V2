@@ -46,9 +46,33 @@ def fetch_reviews(app_id, num_reviews=100):
 
     return df
 
+def save_reviews_to_json(df, file_path="data/sample_reviews.json"):
+    """
+    Saves the reviews DataFrame as a JSON file.
+    """
+    if df is None or df.empty:
+        print("❌ No data to save!")
+        return
+
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    try:
+        print(f"📝 Attempting to save {len(df)} reviews to {file_path}...")  # Debugging message
+        df.to_json(file_path, orient="records", indent=4)
+        print(f"✅ Reviews saved successfully to {file_path}")
+    except Exception as e:
+        print(f"❌ Error saving file: {e}")
+        
 # Test with a sample game (e.g., Portal 2, app_id=620)
 if __name__ == "__main__":
-    game_id = 620  # Change this to any game's Steam App ID
+    game_id = 620  # Example: Portal 2
+
+    # Fetch reviews
     reviews_df = fetch_reviews(game_id)
-    if reviews_df is not None:
+
+    if reviews_df is not None and not reviews_df.empty:
+        print(f"✅ Successfully retrieved {len(reviews_df)} reviews.")
         print(reviews_df.head())  # Print the first few reviews
+        save_reviews_to_json(reviews_df, "data/sample_reviews.json")  # Save to JSON
+    else:
+        print("❌ No reviews retrieved, skipping save.")
